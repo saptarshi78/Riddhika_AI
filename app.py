@@ -148,4 +148,11 @@ def test_mongo():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=int(os.getenv("PORT")), debug=True)
+    app.run(
+        port=int(os.getenv("PORT")),
+        debug=True,
+        ssl_context=(
+            'C:/Users/Saptarshi/Desktop/Riddhika/PEM/cert.pem',
+            'C:/Users/Saptarshi/Desktop/Riddhika/PEM/privkey.pem'
+        )
+    )
