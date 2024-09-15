@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     color: #fff;
-    background-image: url('https://www.simplilearn.com/ice9/free_resources_article_thumb/Types_of_Artificial_Intelligence.jpg');
+    background-image: url('https://aimadeimage.net/wp-content/uploads/2023/11/ai-future-robots-2.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -35,4 +35,9 @@ h1 {
 
 .login-button:hover {
     background-color: #357AE8;
+}
+
+a {
+    color: #0056b3; /* Set link color to white */
+  
 }

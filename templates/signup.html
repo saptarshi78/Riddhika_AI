@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Ridhika AI</title>
+    <link rel="stylesheet" href="static/signup.css">
+    <style>
+        .logo {
+            width: 40px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up for Riddhika</h1>
+        <form action="/signup" method="POST">
+           <input type="email" name="email" placeholder="Enter your email" required>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p><a href="/login_email"><img src="https://cdn.iconscout.com/icon/free/png-256/free-google-mail-new-logo-icon-download-in-svg-png-gif-file-formats--gmail-one-ui-pack-logos-icons-3955524.png?f=webp" alt="Email Logo" class="logo"> Login with Email</a></p>
+        <p><a href="/login"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png" alt="Google Logo" class="logo"> Login with Google</a></p>
+    </div>
+</body>
+</html>

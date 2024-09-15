@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from flask_session import Session
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Load environment variables from .env
 load_dotenv()
@@ -19,6 +20,7 @@ app = Flask(__name__)
 # MongoDB Setup
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client.get_database('myDatabase')  # Example of accessing the database
+users_collection = db['users']  # Collection for storing user details
 
 # Flask Session Setup
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -96,6 +98,38 @@ def credentials_to_dict(credentials):
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes
     }
+
+# Route to handle user signup with email and password
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        hashed_password = generate_password_hash(password)
+
+        # Store the user in MongoDB
+        users_collection.insert_one({'email': email, 'password': hashed_password})
+        session['email'] = email
+        return redirect(url_for('ai_page'))
+
+    return render_template('signup.html')
+
+# Route to handle user login with email and password
+@app.route('/login_email', methods=['GET', 'POST'])
+def login_email():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        # Check if the user exists in MongoDB
+        user = users_collection.find_one({'email': email})
+        if user and check_password_hash(user['password'], password):
+            session['email'] = email
+            return redirect(url_for('ai_page'))
+        else:
+            return "Invalid credentials, try again."
+
+    return render_template('login_email.html')
 
 # Route to test MongoDB connection
 @app.route('/test_mongo')
