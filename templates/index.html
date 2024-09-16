@@ -3,21 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riddhika - Your AI Friend</title>
+    <title>Ridhika - Your AI Friend</title>
     <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Riddhika - Your AI Friend with Emotions and Feelings</h1>
+       <h1 class="welcome-message">
+    <span class="user-name">Welcome, {{ user_name }}!</span><br></h1>
+   <h2> I Am Riddhika❤️‍🔥 - Your AI Friend with Emotions and Feelings
+</h2>
+
+        
         <div class="input-container">
-            <input type="text" id="message" placeholder="Type your message">
+            <input type="text" id="message" placeholder="Type your message" oninput="showUserTyping()">
             <button onclick="sendMessage()">Send</button>
         </div>
+
+        <div id="typing-indicator" class="typing-indicator"></div> <!-- Typing Indicator -->
+        
         <div class="response-container">
             <p id="response"></p>
         </div>
     </div>
 
-    <script src="static/scripts.js"></script>
+    <script>
+        // JavaScript to handle the typing indicator
+        function showUserTyping() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.textContent = `Typing...`;
+            setTimeout(() => {
+                typingIndicator.textContent = ''; // Clear the typing indicator after a short delay
+            }, 1000);
+        }
+        
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = data.response;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
